@@ -14,5 +14,23 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd">
     <context:component-scan base-package="cn.itcast"></context:component-scan>
 
-
+    <bean id="bookService" class="cn.itcast.xmlanno.BookService"></bean>
+    <bean id="bookDao" class="cn.itcast.xmlanno.BookDao"></bean>
+    <bean id="ordersDao" class="cn.itcast.xmlanno.OrdersDao"></bean>
+<!--aop练习之-——基于AspectJ的xml配置-->
+    <!--配置对象-->
+    <bean id="book" class="cn.itcast.aop.Book"></bean>
+    <bean id="myBook" class="cn.itcast.aop.MyBook"></bean>
+    <!--配置aop操作-->
+    <aop:config>
+        <!--配置切入点-->
+        <aop:pointcut id="pointcut1" expression="execution(* cn.itcast.aop.Book.*(..))"></aop:pointcut>
+        <!--配置切面-->
+        <aop:aspect ref="myBook">
+            <!--配置增强类型-->
+            <aop:before method="before1" pointcut-ref="pointcut1"></aop:before>
+            <aop:after-returning method="after1" pointcut-ref="pointcut1"></aop:after-returning>
+            <aop:around method="around1" pointcut-ref="pointcut1"></aop:around>
+        </aop:aspect>
+    </aop:config>
 </beans>
